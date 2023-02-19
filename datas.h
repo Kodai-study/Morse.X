@@ -11,14 +11,22 @@
 #define P(sym,num) PORT##sym ##bits.R##sym ##num 
 #define TRIS(sym,num) TRIS##sym ##bits.TRIS##sym ##num 
 
+#define SYMBOL_KIND 15
+
 typedef unsigned short int DATA_TYPE;
 
 extern const unsigned char bits[];
 extern const DATA_TYPE char_datas[];
-extern const DATA_TYPE symbol[];
+extern const DATA_TYPE symbols[];
 extern const DATA_TYPE num_datas[];
-extern const int code_size[];
-
+extern const int size_char[];
+extern const int size_symbol[];
+extern const int size_num[];
 extern const DATA_TYPE END;
+extern _Bool sw_status[4][3];
+extern int check_row;
+extern _Bool sw_flg;
+
+void sw_init();
 
 #endif	/* XC_HEADER_TEMPLATE_H */

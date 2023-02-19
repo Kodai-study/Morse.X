@@ -23,12 +23,36 @@ unsigned char st_data[ST_SIZE] = {0};
 unsigned char st_buf[ST_SIZE] = {0};
 unsigned long long index = 0;
 const unsigned long long MAX_SIZE = ST_SIZE * 8;
+const int data_size = sizeof(DATA_TYPE) * 8;
 
 int get_size(char c){
     if(c >= 'A' && c <= 'Z'){
-        return c - 'A';
+        return size_char[c - 'A'];
+    } else if(c >= '0' && c <= '9'){
+        return size_num[c - '0'];
+    } else{
+        for(int i = 0;i < SYMBOL_KIND;i++){
+            if(symbols[i] == c){
+                return size_symbol[i];
+            }
+        }
     }
     return -1;
+}
+
+int next(char c){
+    int size;
+    if((size = get_size(c)) > 0){
+        index += size + 2;
+    } else {
+        LCD_Clear();
+        LCD_Character(c);
+        LCD_String(" is Error");
+    }
+    if(index + data_size + 3 < MAX_SIZE){
+        return 1;
+    } 
+    return 0;
 }
 
 int char_add(DATA_TYPE c, int size){
